@@ -2,8 +2,12 @@
 	"name": "codeshell",
 	"displayName": "codeshell",
 	"description": "Start a new PowerShell window for the project folder",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"publisher": "Kipters",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kipters/codeshell"
+	},
 	"engines": {
 		"vscode": "^0.10.1"
 	},
