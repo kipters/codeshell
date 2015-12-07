@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		
-		var cmd = 'start powershell.exe -noexit -command \"cd \'' + vscode.workspace.rootPath + '\'\"';
+		var cmd = 'start powershell.exe -ExecutionPolicy UnRestricted  -noexit -command \"cd \'' + vscode.workspace.rootPath + '\'\"';
 		exec(cmd);
 	});
 	
