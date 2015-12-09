@@ -19,10 +19,16 @@
 	],
 	"main": "./out/src/extension",
 	"contributes": {
-		"commands": [{
-			"command": "extension.startShell",
-			"title": "Start PowerShell"
-		}]
+		"commands": [
+			{
+				"command": "extension.startUnrestrictedShell",
+				"title": "Start PowerShell (Unrestricted)"
+			},
+			{
+				"command": "extension.startShell",
+				"title": "Start PowerShell"
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",

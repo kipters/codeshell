@@ -15,9 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let exec = require('child_process').exec;
 	
-	var disposable = vscode.commands.registerCommand('extension.startShell', () => {
-		// The code you place here will be executed every time your command is executed
-		
+	let launchShell = function (additionalCommands: string) {
 		if (process.platform != 'win32') {
 			vscode.window.showErrorMessage('PowerShell is supported on Windows only!');
 			return;
@@ -27,10 +25,16 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showWarningMessage('You have to open a folder first');
 			return;
 		}
-		
-		var cmd = 'start powershell.exe -ExecutionPolicy UnRestricted  -noexit -command \"cd \'' + vscode.workspace.rootPath + '\'\"';
+		if (additionalCommands == null) {
+			additionalCommands = '';
+		}
+		var cmd = 'start powershell.exe ' + additionalCommands + ' -noexit -command \"cd \'' + vscode.workspace.rootPath + '\'\"';
 		exec(cmd);
-	});
+	};
 	
-	context.subscriptions.push(disposable);
+	var vanillaDisposable = vscode.commands.registerCommand('extension.startShell', () => launchShell(null));
+	var unrestrictedDisposable = vscode.commands.registerCommand('extension.startUnrestrictedShell', () => launchShell('-ExecutionPolicy Unrestricted'));
+	
+	context.subscriptions.push(vanillaDisposable);
+	context.subscriptions.push(unrestrictedDisposable);
 }
