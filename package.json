@@ -2,7 +2,7 @@
 	"name": "codeshell",
 	"displayName": "CodeShell",
 	"description": "Start a new PowerShell window for the project folder",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"publisher": "Kipters",
 	"repository": {
 		"type": "git",
