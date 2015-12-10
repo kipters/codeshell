@@ -7,7 +7,7 @@ _The PowerShell instance will be started using your system's default ExecutionPo
 
 ##Changelog
 >* 0.2.1
->  * Fixed a bug that the use of the Unrestricted command until you started at least one normal instance
+>  * Fixed a bug that prevented the use of the Unrestricted command until you started at least one normal instance
 >  * Added key bindings for both commands
 >* 0.2.0
 >  * Added a command for starting an Unrestricted PowerShell instance
