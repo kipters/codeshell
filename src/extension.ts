@@ -32,8 +32,8 @@ export function activate(context: vscode.ExtensionContext) {
 		exec(cmd);
 	};
 	
-	var vanillaDisposable = vscode.commands.registerCommand('extension.startShell', () => launchShell(null));
-	var unrestrictedDisposable = vscode.commands.registerCommand('extension.startUnrestrictedShell', () => launchShell('-ExecutionPolicy Unrestricted'));
+	var vanillaDisposable = vscode.commands.registerCommand('codeshell.startShell', () => launchShell(null));
+	var unrestrictedDisposable = vscode.commands.registerCommand('codeshell.startUnrestrictedShell', () => launchShell('-ExecutionPolicy Unrestricted'));
 	
 	context.subscriptions.push(vanillaDisposable);
 	context.subscriptions.push(unrestrictedDisposable);

@@ -2,7 +2,7 @@
 	"name": "codeshell",
 	"displayName": "CodeShell",
 	"description": "Start a new PowerShell window for the project folder",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"publisher": "Kipters",
 	"repository": {
 		"type": "git",
@@ -15,18 +15,33 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.startShell"
+		"onCommand:codeshell.startShell",
+		"onCommand:codeshell.startUnrestrictedShell"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.startUnrestrictedShell",
-				"title": "Start PowerShell (Unrestricted)"
+				"command": "codeshell.startUnrestrictedShell",
+				"title": "Start PowerShell (Unrestricted)",
+				"description": "Starts a PowerShell instance with its ExecutionPolicy set to Unrestricted"
 			},
 			{
-				"command": "extension.startShell",
-				"title": "Start PowerShell"
+				"command": "codeshell.startShell",
+				"title": "Start PowerShell",
+				"description": "Starts a PowerShell instance with the system default ExecutionPolicy"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "codeshell.startShell",
+				"key": "ctrl+alt+p",
+				"mac": "cmd+alt+p"
+			},
+			{
+				"command": "codeshell.startUnrestrictedShell",
+				"key": "ctrl+alt+u",
+				"mac": "cmd+alt+u"
 			}
 		]
 	},
