@@ -14,6 +14,26 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
 	let exec = require('child_process').exec;
+    let accessfs = require('fs').accessSync;
+    
+    let getNativeShellPath = function() {
+        // VS code is running in a 32 bit process. 64 bit Windows will therefore redirect accesses to
+        // system programs to 32 bit versions of them (WOW64, see https://msdn.microsoft.com/en-us/library/windows/desktop/aa384187(v=vs.85).aspx )
+        // If that is the case, we need to work around the redirection to access the native powershell.
+        if (process.env.PROCESSOR_ARCHITECTURE === 'x86') {
+            try {
+                accessfs(process.env.WINDIR + '\\Sysnative');
+                return process.env.WINDIR + '\\Sysnative\\cmd.exe';
+            } catch (exc) {
+                // Cannot find Sysnative path -> either below Windows Vista or not 64bit -> 32 bit Shell
+                return process.env.WINDIR + '\\System32\\cmd.exe';
+            }
+        }
+        else {
+            // apparently, VS code is now running in a 64 bit process. Nothing to do.
+            return process.env.WINDIR + '\\System32\\cmd.exe';
+        }
+    }
 	
 	let launchShell = function (additionalCommands: string) {
 		if (process.platform != 'win32') {
@@ -28,8 +48,10 @@ export function activate(context: vscode.ExtensionContext) {
 		if (additionalCommands == null) {
 			additionalCommands = '';
 		}
-		var cmd = 'start powershell.exe ' + additionalCommands + ' -noexit -command \"cd \'' + vscode.workspace.rootPath + '\'\"';
-		exec(cmd);
+        
+		var cmd: string = 'start powershell.exe ' + additionalCommands + ' -noexit';
+        var nativeShellCmd: string = getNativeShellPath() + ' /Q /S /C \" ' + cmd.replace('\"','^\"') + ' \"';
+		exec(nativeShellCmd, { cwd: vscode.workspace.rootPath });
 	};
 	
 	var vanillaDisposable = vscode.commands.registerCommand('codeshell.startShell', () => launchShell(null));
